@@ -296,7 +296,11 @@ a:hover {
   background: rgba(92, 124, 250, 0.06);
 }
 
-.pagination {
+.filter-expand {
+  margin-top: 0.35rem;
+  padding: 0.35rem 0.65rem;
+  font-size: 0.85rem;
+}
   display: flex;
   align-items: center;
   justify-content: center;

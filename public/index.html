@@ -32,8 +32,10 @@
     <section class="hero card">
       <h1>Filter Luma guest exports</h1>
       <p class="hero-lead">
-        Upload a CSV from Luma (Manage → Guests → Download CSV). Pick one or many filter values,
-        preview the matching rows, and download a filtered CSV. Your file stays in the browser.
+        Upload any Luma guest-list CSV (Manage → Guests → Download CSV). Filters are built
+        automatically from the columns in your file — registration status, tickets, coupons,
+        custom questions, and more. Preview matching rows and download a filtered CSV. Your file
+        stays in the browser.
       </p>
       <div class="hero-actions">
         <a class="deploy-link" id="deployHero" href="#" target="_blank" rel="noopener noreferrer">
@@ -56,7 +58,7 @@
     <section class="card filters-section" id="filtersSection" hidden>
       <div class="section-head">
         <h2>Filters</h2>
-        <p class="section-sub">Select one or more values in each group. Groups combine with AND.</p>
+        <p class="section-sub">Filters are generated from your CSV columns. Select one or more values per group. Groups combine with AND.</p>
       </div>
       <div class="filters-toolbar">
         <button type="button" class="btn btn-ghost" id="clearFiltersBtn">Clear all filters</button>

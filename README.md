@@ -1,6 +1,6 @@
 # Luma Guest Filter
 
-Upload a [Luma](https://lu.ma) guest-list CSV, filter by registration status, ticket type, coupon, and other columns, then preview and download the filtered export. Processing happens entirely in your browser: nothing is uploaded to a server.
+Upload any Luma guest-list CSV. Filters are auto-generated from whatever columns your export contains (status, tickets, coupons, custom registration questions, etc.), then preview and download the filtered export. Processing happens entirely in the browser.
 
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/ojusave/luma-guest-filter)
 
@@ -16,12 +16,13 @@ Filter groups combine with **AND**. Multiple selections within a group combine w
 
 ## Filters
 
-Standard Luma columns:
+The app inspects your CSV and creates filter groups for columns that look filterable:
 
-- **Registration status**: Going, Pending, Waitlist, Invited, Not Going
-- **Check-in status**: Checked in / Not checked in
-- **Ticket type**, **Coupon code**, **UTM source**
-- Custom registration questions with a small set of answers (auto-detected)
+- **Always when present:** registration status (`approval_status`), check-in/join columns, ticket type, coupon, source fields
+- **Auto-detected:** any other column with a small set of distinct values (custom registration questions, payment tiers, etc.)
+- **Skipped:** high-cardinality fields like email, names, URLs, IDs, and long free-text answers
+
+Known Luma status values are shown with friendly labels (Going, Pending, Not Going, etc.) when they appear in the file.
 
 ## Deploy on Render
 
