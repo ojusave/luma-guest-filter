@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luma Guest Filter — Render</title>
+  <meta name="description" content="Upload a Luma guest list CSV, filter by registration status, ticket type, and more, then preview and download the filtered export.">
+
+  <link rel="icon" href="https://render.com/icon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="/">
+        <img src="https://render.com/icon.svg" alt="" width="28" height="28">
+        <span>Luma Guest Filter</span>
+      </a>
+      <nav class="header-actions">
+        <a class="btn btn-secondary" id="signupNav" href="#" target="_blank" rel="noopener noreferrer">Sign up on Render</a>
+        <a class="deploy-link" id="deployNav" href="#" target="_blank" rel="noopener noreferrer">
+          <img src="https://render.com/images/deploy-to-render-button.svg" alt="Deploy to Render" height="32">
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main">
+    <section class="hero card">
+      <h1>Filter Luma guest exports</h1>
+      <p class="hero-lead">
+        Upload a CSV from Luma (Manage → Guests → Download CSV). Pick one or many filter values,
+        preview the matching rows, and download a filtered CSV. Your file stays in the browser.
+      </p>
+      <div class="hero-actions">
+        <a class="deploy-link" id="deployHero" href="#" target="_blank" rel="noopener noreferrer">
+          <img src="https://render.com/images/deploy-to-render-button.svg" alt="Deploy to Render" height="40">
+        </a>
+        <a class="btn btn-secondary" id="signupHero" href="#" target="_blank" rel="noopener noreferrer">Sign up on Render</a>
+      </div>
+    </section>
+
+    <section class="card upload-section" id="uploadSection">
+      <div class="upload-zone" id="uploadZone" tabindex="0" role="button" aria-label="Upload Luma CSV">
+        <input type="file" id="fileInput" accept=".csv,text/csv" hidden>
+        <div class="upload-icon" aria-hidden="true">↑</div>
+        <p class="upload-title">Drop your Luma guest CSV here</p>
+        <p class="upload-hint">or click to browse · CSV only</p>
+      </div>
+      <p class="upload-meta" id="uploadMeta" hidden></p>
+    </section>
+
+    <section class="card filters-section" id="filtersSection" hidden>
+      <div class="section-head">
+        <h2>Filters</h2>
+        <p class="section-sub">Select one or more values in each group. Groups combine with AND.</p>
+      </div>
+      <div class="filters-toolbar">
+        <button type="button" class="btn btn-ghost" id="clearFiltersBtn">Clear all filters</button>
+        <button type="button" class="btn btn-ghost" id="resetFileBtn">Upload a different file</button>
+      </div>
+      <div class="filters-grid" id="filtersGrid"></div>
+    </section>
+
+    <section class="card results-section" id="resultsSection" hidden>
+      <div class="section-head results-head">
+        <div>
+          <h2>Filtered guests</h2>
+          <p class="section-sub" id="resultsSummary"></p>
+        </div>
+        <button type="button" class="btn btn-primary" id="downloadBtn">Download filtered CSV</button>
+      </div>
+      <div class="table-wrap">
+        <table class="guest-table" id="guestTable">
+          <thead id="tableHead"></thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+      <div class="pagination" id="pagination" hidden>
+        <button type="button" class="btn btn-ghost" id="prevPageBtn">Previous</button>
+        <span id="pageInfo"></span>
+        <button type="button" class="btn btn-ghost" id="nextPageBtn">Next</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a id="githubLink" href="https://github.com/ojusave/luma-guest-filter" target="_blank" rel="noopener noreferrer">View on GitHub</a>
+    <a id="signupFooter" href="#" target="_blank" rel="noopener noreferrer">Sign up on Render</a>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.5.2/papaparse.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

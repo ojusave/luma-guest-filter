@@ -1,0 +1,18 @@
+# Luma Guest Filter — filter Luma CSV exports in the browser
+# https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: luma-guest-filter
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: "22"
+      - key: GITHUB_REPO_URL
+        value: https://github.com/ojusave/luma-guest-filter

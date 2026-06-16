@@ -1,0 +1,17 @@
+{
+  "name": "luma-guest-filter",
+  "version": "1.0.0",
+  "description": "Filter and export Luma event guest CSV exports in the browser",
+  "private": true,
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "compression": "^1.8.1",
+    "express": "^4.21.2"
+  }
+}
