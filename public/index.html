@@ -9,17 +9,33 @@
   <link rel="icon" href="https://render.com/icon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header class="site-header">
     <div class="header-inner">
       <a class="brand" href="/">
-        <img src="https://render.com/icon.svg" alt="" width="28" height="28">
+        <img src="https://render.com/icon.svg" alt="" width="24" height="24">
         <span>Luma Guest Filter</span>
       </a>
       <nav class="header-actions">
+        <button type="button" class="btn btn-ghost btn-icon" id="themeToggle" aria-label="Toggle theme">
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
         <a class="btn btn-secondary" id="signupNav" href="#" target="_blank" rel="noopener noreferrer">Sign up on Render</a>
         <a class="deploy-link" id="deployNav" href="#" target="_blank" rel="noopener noreferrer">
           <img src="https://render.com/images/deploy-to-render-button.svg" alt="Deploy to Render" height="32">
@@ -28,72 +44,83 @@
     </div>
   </header>
 
-  <main class="main">
-    <section class="hero card">
-      <h1>Filter Luma guest exports</h1>
-      <p class="hero-lead">
-        Upload any Luma guest-list CSV (Manage → Guests → Download CSV). Filters are built
-        automatically from the columns in your file — registration status, tickets, coupons,
-        custom questions, and more. Preview matching rows and download a filtered CSV. Your file
-        stays in the browser.
+  <main class="landing" id="landingView">
+    <section class="intro">
+      <p class="eyebrow">Luma guest lists</p>
+      <h1>Filter any guest export, download what you need</h1>
+      <p class="intro-lead">
+        Upload a CSV from Luma. Filters are built from the columns in your file.
+        Everything runs in your browser — nothing is uploaded to a server.
       </p>
-      <div class="hero-actions">
+      <div class="intro-actions">
         <a class="deploy-link" id="deployHero" href="#" target="_blank" rel="noopener noreferrer">
-          <img src="https://render.com/images/deploy-to-render-button.svg" alt="Deploy to Render" height="40">
+          <img src="https://render.com/images/deploy-to-render-button.svg" alt="Deploy to Render" height="36">
         </a>
         <a class="btn btn-secondary" id="signupHero" href="#" target="_blank" rel="noopener noreferrer">Sign up on Render</a>
       </div>
     </section>
 
-    <section class="card upload-section" id="uploadSection">
+    <section class="panel upload-panel">
       <div class="upload-zone" id="uploadZone" tabindex="0" role="button" aria-label="Upload Luma CSV">
         <input type="file" id="fileInput" accept=".csv,text/csv" hidden>
-        <div class="upload-icon" aria-hidden="true">↑</div>
-        <p class="upload-title">Drop your Luma guest CSV here</p>
-        <p class="upload-hint">or click to browse · CSV only</p>
-      </div>
-      <p class="upload-meta" id="uploadMeta" hidden></p>
-    </section>
-
-    <section class="card filters-section" id="filtersSection" hidden>
-      <div class="section-head">
-        <h2>Filters</h2>
-        <p class="section-sub">Filters are generated from your CSV columns. Select one or more values per group. Groups combine with AND.</p>
-      </div>
-      <div class="filters-toolbar">
-        <button type="button" class="btn btn-primary" id="downloadFiltersBtn">Download CSV</button>
-        <button type="button" class="btn btn-ghost" id="clearFiltersBtn">Clear all filters</button>
-        <button type="button" class="btn btn-ghost" id="resetFileBtn">Upload a different file</button>
-        <span class="filters-toolbar-meta" id="filtersToolbarMeta"></span>
-      </div>
-      <div class="filters-grid" id="filtersGrid"></div>
-    </section>
-
-    <section class="card results-section" id="resultsSection" hidden>
-      <div class="section-head results-head">
-        <div>
-          <h2>Filtered guests</h2>
-          <p class="section-sub" id="resultsSummary"></p>
+        <div class="upload-zone-inner">
+          <div class="upload-icon" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+              <path d="M12 3v12"></path>
+              <path d="m7 10 5-5 5 5"></path>
+              <path d="M5 21h14"></path>
+            </svg>
+          </div>
+          <p class="upload-title">Drop your Luma guest CSV here</p>
+          <p class="upload-hint">or click to browse</p>
         </div>
-        <button type="button" class="btn btn-primary" id="downloadBtn">Download filtered CSV</button>
-      </div>
-      <div class="table-wrap">
-        <table class="guest-table" id="guestTable">
-          <thead id="tableHead"></thead>
-          <tbody id="tableBody"></tbody>
-        </table>
-      </div>
-      <div class="pagination" id="pagination" hidden>
-        <button type="button" class="btn btn-ghost" id="prevPageBtn">Previous</button>
-        <span id="pageInfo"></span>
-        <button type="button" class="btn btn-ghost" id="nextPageBtn">Next</button>
       </div>
     </section>
   </main>
 
-  <div class="download-bar" id="downloadBar" hidden>
-    <p class="download-bar-summary" id="downloadBarSummary"></p>
-    <button type="button" class="btn btn-primary" id="downloadBarBtn">Download CSV</button>
+  <div class="workspace" id="workspaceView" hidden>
+    <div class="workspace-toolbar panel">
+      <div class="toolbar-start">
+        <p class="toolbar-label">Current file</p>
+        <p class="toolbar-file" id="toolbarFileName"></p>
+        <p class="toolbar-meta" id="toolbarMeta"></p>
+      </div>
+      <div class="toolbar-actions">
+        <button type="button" class="btn btn-primary" id="downloadBtn">Download CSV</button>
+        <button type="button" class="btn btn-secondary" id="clearFiltersBtn">Clear filters</button>
+        <button type="button" class="btn btn-ghost" id="resetFileBtn">New file</button>
+      </div>
+    </div>
+
+    <div class="workspace-body">
+      <aside class="filters-panel panel" id="filtersPanel">
+        <div class="panel-head">
+          <h2>Filters</h2>
+          <p class="panel-sub">Pick one or more values per group. Groups combine with AND.</p>
+        </div>
+        <div class="filters-scroll" id="filtersGrid"></div>
+      </aside>
+
+      <section class="results-panel panel">
+        <div class="panel-head results-head">
+          <div>
+            <h2>Guest preview</h2>
+            <p class="panel-sub" id="resultsSummary"></p>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="guest-table" id="guestTable">
+            <thead id="tableHead"></thead>
+            <tbody id="tableBody"></tbody>
+          </table>
+        </div>
+        <div class="pagination" id="pagination" hidden>
+          <button type="button" class="btn btn-secondary" id="prevPageBtn">Previous</button>
+          <span id="pageInfo"></span>
+          <button type="button" class="btn btn-secondary" id="nextPageBtn">Next</button>
+        </div>
+      </section>
+    </div>
   </div>
 
   <footer class="site-footer">

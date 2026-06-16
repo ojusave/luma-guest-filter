@@ -338,8 +338,7 @@ function renderFilters() {
   grid.innerHTML = "";
 
   if (!state.filterGroups.length) {
-    grid.innerHTML =
-      '<p class="section-sub">No filterable columns were detected in this file. You can still preview and download the full guest list.</p>';
+    grid.innerHTML = '<p class="empty-filters">No filterable columns detected. You can still preview and download the full list.</p>';
     return;
   }
 
@@ -364,19 +363,21 @@ function renderFilters() {
 function updateDownloadUi(filteredCount, totalCount) {
   const summary = `${filteredCount.toLocaleString()} of ${totalCount.toLocaleString()} guests`;
   document.getElementById("resultsSummary").textContent =
-    `Showing ${summary} · ${state.filterGroups.length.toLocaleString()} filter groups from your file`;
-  document.getElementById("filtersToolbarMeta").textContent = summary;
-  document.getElementById("downloadBarSummary").textContent = `Ready to export: ${summary}`;
+    `Showing ${summary} · ${state.filterGroups.length.toLocaleString()} filter groups`;
+  document.getElementById("toolbarMeta").textContent = summary;
 }
 
-function showDownloadBar() {
-  document.getElementById("downloadBar").hidden = false;
-  document.body.classList.add("has-download-bar");
+function showWorkspace(fileName, rowCount, columnCount, lumaHint) {
+  document.getElementById("landingView").hidden = true;
+  document.getElementById("workspaceView").hidden = false;
+  document.getElementById("toolbarFileName").textContent = fileName;
+  document.getElementById("toolbarMeta").textContent =
+    `${rowCount.toLocaleString()} rows · ${columnCount} columns · ${lumaHint}`;
 }
 
-function hideDownloadBar() {
-  document.getElementById("downloadBar").hidden = true;
-  document.body.classList.remove("has-download-bar");
+function showLanding() {
+  document.getElementById("landingView").hidden = false;
+  document.getElementById("workspaceView").hidden = true;
 }
 
 function renderResults() {
@@ -447,11 +448,7 @@ function resetApp() {
   state.page = 1;
 
   document.getElementById("fileInput").value = "";
-  document.getElementById("uploadMeta").hidden = true;
-  document.getElementById("filtersSection").hidden = true;
-  document.getElementById("resultsSection").hidden = true;
-  document.getElementById("uploadSection").hidden = false;
-  hideDownloadBar();
+  showLanding();
 }
 
 function handleParsedFile(file, parsed) {
@@ -489,14 +486,7 @@ function handleParsedFile(file, parsed) {
     ? "Luma export detected"
     : "Custom CSV loaded";
 
-  document.getElementById("uploadMeta").hidden = false;
-  document.getElementById("uploadMeta").textContent =
-    `${file.name} · ${rows.length.toLocaleString()} rows · ${columns.length} columns · ${lumaHint}`;
-
-  document.getElementById("uploadSection").hidden = true;
-  document.getElementById("filtersSection").hidden = false;
-  document.getElementById("resultsSection").hidden = false;
-  showDownloadBar();
+  showWorkspace(file.name, rows.length, columns.length, lumaHint);
 
   renderFilters();
   renderResults();
@@ -556,6 +546,20 @@ function wireUpload() {
   });
 }
 
+function wireTheme() {
+  const root = document.documentElement;
+  const stored = localStorage.getItem("luma-filter-theme");
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const theme = stored || (prefersDark ? "dark" : "light");
+  root.setAttribute("data-theme", theme);
+
+  document.getElementById("themeToggle").addEventListener("click", () => {
+    const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    localStorage.setItem("luma-filter-theme", next);
+  });
+}
+
 function wireActions() {
   document.getElementById("clearFiltersBtn").addEventListener("click", () => {
     initSelection(state.filterGroups);
@@ -566,8 +570,6 @@ function wireActions() {
 
   document.getElementById("resetFileBtn").addEventListener("click", resetApp);
   document.getElementById("downloadBtn").addEventListener("click", downloadFilteredCsv);
-  document.getElementById("downloadFiltersBtn").addEventListener("click", downloadFilteredCsv);
-  document.getElementById("downloadBarBtn").addEventListener("click", downloadFilteredCsv);
 
   document.getElementById("prevPageBtn").addEventListener("click", () => {
     state.page -= 1;
@@ -580,5 +582,6 @@ function wireActions() {
 }
 
 wireMarketingLinks();
+wireTheme();
 wireUpload();
 wireActions();
