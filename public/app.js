@@ -165,7 +165,7 @@ function isNeverFilterColumn(column, rows) {
 function isFilterableColumn(column, rows) {
   if (isNeverFilterColumn(column, rows)) return false;
   const uniqueCount = uniqueValuesForColumn(rows, column).size;
-  if (uniqueCount === 0) return false;
+  if (uniqueCount <= 1) return false;
   return uniqueCount <= maxUniqueValues(rows.length);
 }
 
