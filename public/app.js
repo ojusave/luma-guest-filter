@@ -361,13 +361,30 @@ function renderFilters() {
   }
 }
 
+function updateDownloadUi(filteredCount, totalCount) {
+  const summary = `${filteredCount.toLocaleString()} of ${totalCount.toLocaleString()} guests`;
+  document.getElementById("resultsSummary").textContent =
+    `Showing ${summary} · ${state.filterGroups.length.toLocaleString()} filter groups from your file`;
+  document.getElementById("filtersToolbarMeta").textContent = summary;
+  document.getElementById("downloadBarSummary").textContent = `Ready to export: ${summary}`;
+}
+
+function showDownloadBar() {
+  document.getElementById("downloadBar").hidden = false;
+  document.body.classList.add("has-download-bar");
+}
+
+function hideDownloadBar() {
+  document.getElementById("downloadBar").hidden = true;
+  document.body.classList.remove("has-download-bar");
+}
+
 function renderResults() {
   const filtered = getFilteredRows();
   const total = state.rows.length;
   const showing = filtered.length;
 
-  document.getElementById("resultsSummary").textContent =
-    `Showing ${showing.toLocaleString()} of ${total.toLocaleString()} guests · ${state.filterGroups.length.toLocaleString()} filter groups from your file`;
+  updateDownloadUi(showing, total);
 
   const totalPages = Math.max(1, Math.ceil(showing / PAGE_SIZE));
   if (state.page > totalPages) state.page = totalPages;
@@ -434,6 +451,7 @@ function resetApp() {
   document.getElementById("filtersSection").hidden = true;
   document.getElementById("resultsSection").hidden = true;
   document.getElementById("uploadSection").hidden = false;
+  hideDownloadBar();
 }
 
 function handleParsedFile(file, parsed) {
@@ -478,6 +496,7 @@ function handleParsedFile(file, parsed) {
   document.getElementById("uploadSection").hidden = true;
   document.getElementById("filtersSection").hidden = false;
   document.getElementById("resultsSection").hidden = false;
+  showDownloadBar();
 
   renderFilters();
   renderResults();
@@ -547,6 +566,8 @@ function wireActions() {
 
   document.getElementById("resetFileBtn").addEventListener("click", resetApp);
   document.getElementById("downloadBtn").addEventListener("click", downloadFilteredCsv);
+  document.getElementById("downloadFiltersBtn").addEventListener("click", downloadFilteredCsv);
+  document.getElementById("downloadBarBtn").addEventListener("click", downloadFilteredCsv);
 
   document.getElementById("prevPageBtn").addEventListener("click", () => {
     state.page -= 1;

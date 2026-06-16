@@ -61,8 +61,10 @@
         <p class="section-sub">Filters are generated from your CSV columns. Select one or more values per group. Groups combine with AND.</p>
       </div>
       <div class="filters-toolbar">
+        <button type="button" class="btn btn-primary" id="downloadFiltersBtn">Download CSV</button>
         <button type="button" class="btn btn-ghost" id="clearFiltersBtn">Clear all filters</button>
         <button type="button" class="btn btn-ghost" id="resetFileBtn">Upload a different file</button>
+        <span class="filters-toolbar-meta" id="filtersToolbarMeta"></span>
       </div>
       <div class="filters-grid" id="filtersGrid"></div>
     </section>
@@ -88,6 +90,11 @@
       </div>
     </section>
   </main>
+
+  <div class="download-bar" id="downloadBar" hidden>
+    <p class="download-bar-summary" id="downloadBarSummary"></p>
+    <button type="button" class="btn btn-primary" id="downloadBarBtn">Download CSV</button>
+  </div>
 
   <footer class="site-footer">
     <a id="githubLink" href="https://github.com/ojusave/luma-guest-filter" target="_blank" rel="noopener noreferrer">View on GitHub</a>

@@ -210,8 +210,43 @@ a:hover {
 .filters-toolbar {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 0.5rem;
   margin: 1rem 0;
+}
+
+.filters-toolbar-meta {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.download-bar {
+  position: sticky;
+  bottom: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: min(1120px, calc(100% - 2rem));
+  margin: 0 auto 1rem;
+  padding: 0.85rem 1rem;
+  background: rgba(23, 25, 35, 0.95);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(8px);
+}
+
+.download-bar-summary {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+body.has-download-bar {
+  padding-bottom: 1rem;
 }
 
 .filters-grid {
